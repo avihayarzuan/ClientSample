@@ -28,7 +28,7 @@ namespace ClientSample
                 // Send data to server
                 Console.Write("Please enter a number: ");
                 string num = Console.ReadLine();
-                Console.Write(num);
+                Console.Write(num + "\n");
                 writer.Write(num);
                 // Get result from server
                 string result = reader.ReadString();

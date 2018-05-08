@@ -21,45 +21,80 @@ namespace ClientSample
             TcpClient client = new TcpClient();
             client.Connect(ep);
             Console.WriteLine("You are connected");
-            Console.Write("a for option one: ");
-            string check = Console.ReadLine();
-            //int.TryParse(check, out int res);
-            if (check.Equals("a"))
-            {
+            NetworkStream stream = client.GetStream();
 
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            Task task1 = new Task(() =>
             {
-                // Send data to server
-                Console.Write("Please enter a number: ");
-                string num = Console.ReadLine();
-                Console.Write(num + "\n");
-                writer.Write(num);
-                // Get result from server
-                string result = reader.ReadString();
-                Console.WriteLine(result);
-            }
-            client.Close();
-
-            } else
-            {
-
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-            while(true)
+                //using (BinaryReader reader = new BinaryReader(stream))
+                using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                Console.Write("\n");
-                string result = reader.ReadString();
-                Console.WriteLine(result);
+                    while (true)
+                    {
+                        
+                        // Send data to server
+                        Console.Write("\n");
+                        string line = Console.ReadLine();
+                        writer.Write(line);
+                        writer.Flush();
+                    }
                 }
-            }
-            client.Close();
-            }
+            });
 
-            Console.ReadKey();
+            Task task2 = new Task(() =>
+            {
+                //using (NetworkStream stream = client.GetStream())
+                using (BinaryReader reader = new BinaryReader(stream))
+                //using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    while (true)
+                    {
+                        Console.Write("\n");
+                        string result = reader.ReadString();
+                        Console.WriteLine(result);
+                        //reader.Dispose();
+                    }
+                }
+            });
+
+            task1.Start();
+            task2.Start();
+            task1.Wait();
+            //if (check.Equals("a"))
+            //{
+
+            //using (NetworkStream stream = client.GetStream())
+            //using (BinaryReader reader = new BinaryReader(stream))
+            //using (BinaryWriter writer = new BinaryWriter(stream))
+            //{
+            //    // Send data to server
+            //    Console.Write("Please enter a number: ");
+            //    string num = Console.ReadLine();
+            //    Console.Write(num + "\n");
+            //    writer.Write(num);
+            //    // Get result from server
+            //    string result = reader.ReadString();
+            //    Console.WriteLine(result);
+            //}
+            //client.Close();
+
+            //} else
+            //{
+
+            //using (NetworkStream stream = client.GetStream())
+            //using (BinaryReader reader = new BinaryReader(stream))
+            //using (BinaryWriter writer = new BinaryWriter(stream))
+            //{
+            //while(true)
+            //    {
+            //    Console.Write("\n");
+            //    string result = reader.ReadString();
+            //    Console.WriteLine(result);
+            //    }
+            //}
+            //client.Close();
+            //}
+
+            //Console.ReadKey();
         }
     }
 }

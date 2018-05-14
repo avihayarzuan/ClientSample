@@ -59,42 +59,22 @@ namespace ClientSample
             task1.Start();
             task2.Start();
             task1.Wait();
-            //if (check.Equals("a"))
-            //{
-
-            //using (NetworkStream stream = client.GetStream())
-            //using (BinaryReader reader = new BinaryReader(stream))
-            //using (BinaryWriter writer = new BinaryWriter(stream))
-            //{
-            //    // Send data to server
-            //    Console.Write("Please enter a number: ");
-            //    string num = Console.ReadLine();
-            //    Console.Write(num + "\n");
-            //    writer.Write(num);
-            //    // Get result from server
-            //    string result = reader.ReadString();
-            //    Console.WriteLine(result);
-            //}
-            //client.Close();
-
-            //} else
-            //{
-
-            //using (NetworkStream stream = client.GetStream())
-            //using (BinaryReader reader = new BinaryReader(stream))
-            //using (BinaryWriter writer = new BinaryWriter(stream))
-            //{
-            //while(true)
-            //    {
-            //    Console.Write("\n");
-            //    string result = reader.ReadString();
-            //    Console.WriteLine(result);
-            //    }
-            //}
-            //client.Close();
-            //}
-
-            //Console.ReadKey();
+            
         }
     }
 }
+
+//JObject closeObj = new JObject
+//{
+//    ["CommandEnum"] = 1,
+//    ["path"] = "fghjd"
+//};
+//string str = closeObj.ToString();
+//Console.WriteLine(str);
+
+//            JObject g = JObject.Parse(str);
+//int x;
+//int.TryParse(g["CommandEnum"].ToString(), out x);
+////g["CommandEnum"];
+//Console.WriteLine(x);
+//            Console.WriteLine(g["path"].ToString());
